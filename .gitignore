@@ -2,4 +2,4 @@ service_account.json
 notas.txt
 .env
 client_secret.json
-__pycache__
+_pycache_
