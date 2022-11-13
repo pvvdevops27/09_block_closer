@@ -3,3 +3,4 @@ notas.txt
 .env
 client_secret.json
 __pycache__
+token_drive_v3
