@@ -60,7 +60,7 @@ def delete_request(message_subject):
 
 
 # Registra la actividad realizada por Aitana
-def logger(tool="Block closer"):
+def logger(tool):
     timestamp = datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S")
     with open('logs.txt', 'a') as the_file:
         the_file.write(f'{timestamp} | {tool} was activated\n')
@@ -138,7 +138,7 @@ def gsheet_to_df(id, sheet_name):
     return df
 
 
-def block_closer():
+def block_approval():
 
     # Handle incoming Close Block request
 
@@ -151,3 +151,28 @@ def block_closer():
     delete_request("Block Closer")
 
     logger()
+
+
+def move_drive_file(source_folder_id, target_folder_id, name):
+    CLIENT_SECRET_FILE = './client_secret.json'
+    API_NAME = 'drive'
+    API_VERSION = 'v3'
+    SCOPES = ["https://www.googleapis.com/auth/drive"]
+
+    service = Create_Service(
+        CLIENT_SECRET_FILE, API_NAME, API_VERSION, SCOPES)
+
+    query = f"parents = '{source_folder_id}'"
+
+    response = service.files().list(q=query).execute()
+    files = response.get('files')
+
+    for file in files:
+        if file["name"] == name:
+            service.files().update(
+                fileId=file.get("id"),
+                addParents=target_folder_id,
+                removeParents=source_folder_id
+            ).execute()
+
+

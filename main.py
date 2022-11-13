@@ -12,7 +12,7 @@ def main():
     try:
         now = datetime.datetime.now().strftime("%d-%m-%Y at %H:%M:%S")
 
-        block_closer()
+        block_approver()
 
         return f"Block closer succesfully executed on {now}"
 
@@ -21,4 +21,4 @@ def main():
 
 
 if __name__ == "__main__":
-    app.run(debug=True, host="0.0.0.0", port=int(os.environ.get("PORT", 8087)))
+    app.run(debug=True, host="0.0.0.0", port=int(os.environ.get("PORT", 8090)))
